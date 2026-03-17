@@ -1,6 +1,5 @@
-# 📊 Data Card — HR Turnover Prediction
+# Data Card HR Turnover Prediction
 
-**Version:** 1.0 | **Date:** 2024 | **Team:** Hackathon AI × HR
 
 ---
 
@@ -24,12 +23,12 @@
 
 | Data | Type | Action |
 |------|------|--------|
-| `Employee_Name` | Direct identifier | ✅ SHA-256 Pseudonymization |
-| `EmpID` | Direct identifier | ✅ SHA-256 Pseudonymization |
-| `ManagerName` | Direct identifier | ✅ SHA-256 Pseudonymization |
-| `DOB` | Quasi-identifier | ✅ Removed → Age Bracket (5-year bins) |
-| `Zip`, `State` | Quasi-identifiers | ✅ Removed (geographic data) |
-| `Salary` | Quasi-identifier | ✅ Removed → Salary Bracket (€10k bins) |
+| `Employee_Name` | Direct identifier |  SHA-256 Pseudonymization |
+| `EmpID` | Direct identifier |  SHA-256 Pseudonymization |
+| `ManagerName` | Direct identifier |  SHA-256 Pseudonymization |
+| `DOB` | Quasi-identifier |  Removed → Age Bracket (5-year bins) |
+| `Zip`, `State` | Quasi-identifiers |  Removed (geographic data) |
+| `Salary` | Quasi-identifier |  Removed → Salary Bracket (€10k bins) |
 
 **Example Pseudonymization:**
 ```
@@ -64,7 +63,7 @@ Protected attributes **kept** to detect bias:
 
 ### 2.4 GDPR & Privacy Compliance
 
-✅ **Measures Applied:**
+ **Measures Applied:**
 - Non-reversible hashing (SHA-256) for direct identifiers
 - Suppression of geographic quasi-identifiers
 - Generalization of continuous attributes (age, salary)
@@ -168,7 +167,7 @@ Predictions + Explanations (Ready for HR)
 
 ## 6. Limitations & Caveats
 
-⚠️ **Important Notes:**
+ **Important :**
 
 1. **Synthetic Data:** Dataset is 100% synthetic; patterns may not reflect real employees
 2. **No Temporal Dynamics:** Static snapshot; cannot model seasonal trends
@@ -183,12 +182,12 @@ Predictions + Explanations (Ready for HR)
 
 | Requirement | Status |
 |------------|--------|
-| GDPR Anonymization | ✅ Pseudo-anonymized (non-reversible hashing) |
-| Data Minimization | ✅ Unnecessary PII removed |
-| EU AI Act (High-Risk) | ✅ Documented & audited |
-| Fairness Testing | ✅ FPR parity framework defined |
-| Human-in-the-Loop | ✅ No automated decisions allowed |
-| Transparency | ✅ SHAP explanations integrated |
+| GDPR Anonymization |  Pseudo-anonymized (non-reversible hashing) |
+| Data Minimization |  Unnecessary PII removed |
+| EU AI Act (High-Risk) |  Documented & audited |
+| Fairness Testing |  FPR parity framework defined |
+| Human-in-the-Loop |  No automated decisions allowed |
+| Transparency |  SHAP explanations integrated |
 
 ---
 
@@ -201,6 +200,6 @@ Predictions + Explanations (Ready for HR)
 
 ---
 
-**Dataset Status:** ✅ Ready for UC1 (Model Training & Fairness Audit)
+**Dataset Status:**  Ready for UC1 (Model Training & Fairness Audit)
 
 **Classification:** Internal Use / Educational & Research Purposes
