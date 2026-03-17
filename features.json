@@ -1,0 +1,21 @@
+[
+  "GenderID",
+  "MarriedID",
+  "PerfScoreID",
+  "FromDiversityJobFairID",
+  "DeptID",
+  "PositionID",
+  "EngagementSurvey",
+  "EmpSatisfaction",
+  "SpecialProjectsCount",
+  "DaysLateLast30",
+  "Absences",
+  "tenure_years",
+  "age_mid",
+  "salary_ratio_dept",
+  "risk_score",
+  "tenure_ratio_dept",
+  "manager_turnover_rate",
+  "absences_per_year",
+  "low_sat_high_abs"
+]
