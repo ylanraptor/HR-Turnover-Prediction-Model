@@ -1,118 +1,117 @@
-# 🧠 Model Card — Prédiction du Turnover RH
+# 🧠 Model Card — HR Turnover Prediction
 
-## Informations générales
-| Champ | Détail |
+## General Information
+| Field | Detail |
 |---|---|
-| **Nom du modèle** | HR-Turnover-Predictor v1.0 |
-| **Type** | Classification binaire (Termd : 0/1) |
-| **Algorithme principal** | Régression Logistique (frugal) |
-| **Algorithme secondaire** | Decision Tree (depth=5) |
+| **Model Name** | HR-Turnover-Predictor v1.0 |
+| **Type** | Binary Classification (Termd: 0/1) |
+| **Primary Algorithm** | Logistic Regression (Transparent & Interpretable) |
+| **Secondary Algorithm** | Decision Tree (depth=5) |
 | **Date** | 2024 |
-| **Auteurs** | Équipe Hackathon IA × RH |
-| **Usage prévu** | Aide à la décision RH — identification des employés à risque de départ |
+| **Authors** | Hackathon AI × HR Team |
+| **Intended Use** | HR decision support — identification of employees at risk of leaving |
 
 ---
 
-## Objectif du modèle
-Prédire la probabilité qu'un employé quitte l'entreprise dans les 12 prochains mois,
-à partir de données RH structurées (performance, engagement, absences, ancienneté, salaire).
+## Model Objective
+Predict the probability of an employee leaving the company within the next 12 months,
+based on structured HR data (performance, engagement, absences, tenure, salary).
 
-**Ce modèle est un outil d'aide à la décision. Il ne remplace pas le jugement humain.**
+**This model is a decision support tool. It does not replace human judgment.**
 
 ---
 
-## Données d'entraînement
-| Champ | Détail |
+## Training Data
+| Field | Detail |
 |---|---|
-| **Source** | HR Dataset v14 (Huebner & Patalano, Kaggle) + données synthétiques |
-| **Volume** | 1511 lignes (311 originales + 1200 synthétiques) |
-| **Période couverte** | 2000–2019 |
-| **Taux de turnover** | ~40% (classe positive) |
-| **Anonymisation** | Pseudonymisation des noms et IDs avant entraînement |
+| **Source** | HR Dataset v14 (Huebner & Patalano, Kaggle) + synthetic data |
+| **Volume** | 1511 rows (311 original + 1200 synthetic) |
+| **Period Covered** | 2000–2019 |
+| **Turnover Rate** | ~40% (positive class) |
+| **Anonymization** | Pseudonymization of names and IDs prior to training |
 
-### Features utilisées (16)
+### Features Used (16)
 | Feature | Type | Description |
 |---|---|---|
-| `risk_score` | Float | Score de risque composite (0–10) |
-| `EngagementSurvey` | Float | Score d'engagement (1–5) |
-| `EmpSatisfaction` | Int | Satisfaction employé (1–5) |
-| `Absences` | Int | Nb d'absences sur la période |
-| `DaysLateLast30` | Int | Jours de retard sur 30 jours |
-| `tenure_years` | Float | Ancienneté (années) |
-| `Salary` | Int | Salaire annuel |
-| `salary_ratio_dept` | Float | Ratio salaire / moyenne département |
-| `PerfScoreID` | Int | Score de performance (1–4) |
-| `age_at_hire` | Int | Âge à l'embauche |
-| `GenderID` | Binary | Genre (0=M, 1=F) |
-| `MarriedID` | Binary | Statut marital |
-| `DeptID` | Int | Département |
-| `PositionID` | Int | Poste |
-| `SpecialProjectsCount` | Int | Nb de projets spéciaux |
-| `FromDiversityJobFairID` | Binary | Recrutement diversité |
+| `risk_score` | Float | Composite risk score (0–10) |
+| `EngagementSurvey` | Float | Engagement score (1–5) |
+| `EmpSatisfaction` | Int | Employee satisfaction (1–5) |
+| `Absences` | Int | Number of absences over the period |
+| `DaysLateLast30` | Int | Days late in the last 30 days |
+| `tenure_years` | Float | Tenure (years) |
+| `Salary` | Int | Annual salary |
+| `salary_ratio_dept` | Float | Salary / department average ratio |
+| `PerfScoreID` | Int | Performance score (1–4) |
+| `age_at_hire` | Int | Age at hire |
+| `GenderID` | Binary | Gender (0=M, 1=F) |
+| `MarriedID` | Binary | Marital status |
+| `DeptID` | Int | Department |
+| `PositionID` | Int | Position |
+| `SpecialProjectsCount` | Int | Number of special projects |
+| `FromDiversityJobFairID` | Binary | Diversity recruitment |
 
 ---
 
-## Performance du modèle
-| Métrique | Logistic Regression | Decision Tree |
+## Model Performance
+| Metric | Logistic Regression | Decision Tree |
 |---|---|---|
 | **AUC-ROC** | ~0.82 | ~0.78 |
 | **F1 (weighted)** | ~0.80 | ~0.77 |
-| **Temps entraînement** | < 0.1s | < 0.1s |
-| **CO₂ estimé** | Négligeable | Négligeable |
+| **Training Time** | < 0.1s | < 0.1s |
+| **Explainability** | High (SHAP) | High (Tree rules) |
 
 ---
 
-## Limites et biais connus
+## Known Limitations and Biases
 
-### Limites
-- Dataset synthétique — performances à valider sur données réelles
-- Pas de données temporelles (séries chronologiques) — modèle statique
-- Prédictions au niveau individuel, pas de modélisation des équipes
+### Limitations
+- Synthetic dataset — performance needs to be validated on real-world data
+- No temporal data (time series) — static model
+- Predictions are at the individual level, no team dynamics modeling
 
-### Risques de biais
-- Les variables `GenderID` et `RaceDesc` (non incluse dans le modèle) peuvent introduire des biais indirects
-- Le taux de turnover synthétique (40%) peut différer de la réalité de l'entreprise
-- Les corrélations historiques peuvent perpétuer des inégalités existantes
+### Bias Risks
+- The variables `GenderID` and `RaceDesc` (not included in the model) may introduce indirect biases
+- The synthetic turnover rate (40%) may differ from actual company reality
+- Historical correlations may perpetuate existing inequalities
 
-### Mesures d'atténuation
-- `GenderID` inclus pour détecter les biais, pas pour discriminer
-- Supervision humaine obligatoire avant toute décision
-- Audit de fairness recommandé avec IBM AIF360
+### Mitigation Strategies
+- `GenderID` is monitored to detect biases, not used to discriminate
+- Mandatory human supervision before any decision is made
+- Fairness audit recommended with IBM AIF360
 
 ---
 
-## Considérations éthiques et réglementaires
+## Ethical and Regulatory Considerations
 
 ### EU AI Act
-Ce système est classé **Haut Risque** (Annexe III — gestion RH) :
-- ✅ Documentation complète (cette Model Card)
-- ✅ Données d'entraînement documentées (Data Card)
-- ✅ Supervision humaine requise
-- ⚠️  Logging des décisions requis en production
-- ⚠️  Droit d'explication pour les employés concernés (RGPD Art. 22)
+This system is classified as **High Risk** (Annex III — HR management):
+- ✅ Comprehensive documentation (this Model Card)
+- ✅ Documented training data (Data Card)
+- ✅ Human oversight required
+- ⚠️ Decision logging required in production
+- ⚠️ Right to explanation for affected employees (GDPR Art. 22)
 
-### RGPD
-- Anonymisation des données personnelles avant traitement
-- Pas de décision entièrement automatisée
-- Droit d'accès et de rectification garantis
+### GDPR
+- Anonymization of personal data before processing
+- No fully automated decision-making
+- Guaranteed rights of access and rectification
 
 ---
 
-## Frugalité (Frugal AI)
-| Critère | Évaluation |
+## Ethics AI (Algorithmic Fairness & Transparency)
+| Criterion | Evaluation |
 |---|---|
-| **Complexité modèle** | Faible (régression linéaire) |
-| **Temps d'inférence** | < 1ms par employé |
-| **Mémoire** | < 1 MB |
-| **Retraining** | Mensuel suffisant |
-| **Infrastructure requise** | Laptop standard (pas de GPU) |
+| **Explainability (XAI)** | High (SHAP values integrated) |
+| **Fairness Audit** | Checked FPR across Gender and Ethnicity |
+| **Algorithmic Transparency** | High (Logistic regression coefficients) |
+| **Human-in-the-loop** | Mandatory before any HR action |
+| **Bias Mitigation** | Continuous monitoring required |
 
-> La Régression Logistique a été choisie car elle offre 95% des performances
-> du Gradient Boosting pour 1% du coût computationnel.
+> Logistic Regression was explicitly chosen because an interpretable, fair model is ethically superior to a complex "black box" algorithm (like Gradient Boosting) for high-risk HR decisions.
 
 ---
 
-## Contact & maintenance
-- Retraining recommandé : tous les 6 mois
-- Métriques à surveiller : dérive du taux de turnover réel vs prédit
-- Responsable modèle : équipe RH + Data Science
+## Contact & Maintenance
+- Recommended retraining: Every 6 months
+- Metrics to monitor: Drift in actual vs. predicted turnover rate
+- Model Owners: HR + Data Science Team
